@@ -24,6 +24,12 @@ lazy val root = crossProject.in(file("."))
       "io.youi" %% "youi-server-undertow" % youiVersion
     )
   )
+  .jsSettings(
+    crossTarget in fastOptJS := baseDirectory.value / ".." / "jvm" / "src" / "main" / "resources" / "app",
+    crossTarget in fullOptJS := baseDirectory.value / ".." / "jvm" / "src" / "main" / "resources" / "app",
+    crossTarget in packageJSDependencies := baseDirectory.value / ".." / "jvm" / "src" / "main" / "resources" / "app",
+    skip in packageJSDependencies := false
+  )
 
 lazy val rootJS = root.js
 lazy val rootJVM = root.jvm
