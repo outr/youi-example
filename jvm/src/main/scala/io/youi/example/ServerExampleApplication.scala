@@ -8,7 +8,12 @@ import io.youi.server.UndertowServer
 import io.youi.server.handler.HttpHandler
 
 object ServerExampleApplication extends UndertowServer with ExampleApplication with SinglePageApplication {
-  val home: HttpHandler = handler.matcher(combined.any(path.exact("/"), path.exact("/index.html"))).htmlPage()
+  val home: HttpHandler = handler.matcher(
+    combined.any(
+      path.exact("/"),
+      path.exact("/index.html")
+    )
+  ).htmlPage()
 
   override protected def templateDirectory: File = new File(".")
 
