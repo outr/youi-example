@@ -25,11 +25,15 @@ lazy val root = crossProject.in(file("."))
     )
   )
   .jsSettings(
-    crossTarget in fastOptJS := baseDirectory.value / ".." / "jvm" / "src" / "main" / "resources" / "app",
-    crossTarget in fullOptJS := baseDirectory.value / ".." / "jvm" / "src" / "main" / "resources" / "app",
-    crossTarget in packageJSDependencies := baseDirectory.value / ".." / "jvm" / "src" / "main" / "resources" / "app",
+//    artifactPath in Compile in fastOptJS := (baseDirectory.value / ".." / "jvm" / "src" / "main" / "resources" / "app" / "application-fastopt.js"),
+//    artifactPath in Test in fastOptJS := (baseDirectory.value / ".." / "jvm" / "src" / "main" / "resources" / "app" / "application-fastopt.js"),
+//    artifactPath in fullOptJS := (baseDirectory.value / ".." / "jvm" / "src" / "main" / "resources" / "app" / "application-opt.js"),
+//    crossTarget in fastOptJS := baseDirectory.value / ".." / "jvm" / "src" / "main" / "resources" / "app",
+//    crossTarget in fullOptJS := baseDirectory.value / ".." / "jvm" / "src" / "main" / "resources" / "app",
+//    crossTarget in packageJSDependencies := baseDirectory.value / ".." / "jvm" / "src" / "main" / "resources" / "app",
     skip in packageJSDependencies := false
   )
+  .enablePlugins(YouIPlugin)
 
 lazy val rootJS = root.js
 lazy val rootJVM = root.jvm
