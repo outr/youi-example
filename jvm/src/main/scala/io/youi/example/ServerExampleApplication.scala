@@ -17,7 +17,7 @@ object ServerExampleApplication extends UndertowServer with ExampleApplication w
 
   override protected def templateDirectory: File = new File(".")
 
-  override protected def appJSContent: Content = Content.classPath("app/youi-example-fastopt.js")
+  override protected def appJSContent: Content = Content.classPath("app/application-fastopt.js")
 
   override protected def appJSMethod: String = "application"
 }
