@@ -12,6 +12,7 @@ val scalaTestVersion = "3.0.3"
 lazy val example = crossApplication.in(file("."))
   .settings(
     name := "youi-example",
+    youiVersion := "0.4.9",
     libraryDependencies ++= Seq(
       "org.scalactic" %%% "scalactic" % scalacticVersion,
       "org.scalatest" %%% "scalatest" % scalaTestVersion % "test"
