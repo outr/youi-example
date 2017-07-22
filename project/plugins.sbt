@@ -1,1 +1,1 @@
-addSbtPlugin("io.youi" % "youi-plugin" % "1.0.0-SNAPSHOT")
+addSbtPlugin("io.youi" % "youi-plugin" % "1.0.0")
