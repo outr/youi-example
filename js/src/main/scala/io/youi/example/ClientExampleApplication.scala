@@ -4,7 +4,7 @@ import io.youi.app.ClientApplication
 
 import scala.scalajs.js.annotation.JSExportTopLevel
 
-object ClientExampleApplication extends ExampleApplication with ClientApplication {
+object ClientExampleApplication extends ClientApplication with ExampleApplication {
   val hello = HelloScreen
 
   @JSExportTopLevel("application")
