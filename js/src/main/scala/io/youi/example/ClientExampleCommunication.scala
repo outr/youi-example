@@ -3,6 +3,10 @@ package io.youi.example
 import scala.concurrent.Future
 import org.scalajs.dom._
 
+/**
+  * The client implementation of ExampleCommunication. Notice only the methods with @client annotation must be
+  * implemented in this trait.
+  */
 trait ClientExampleCommunication extends ExampleCommunication {
   override def alert(message: String): Future[Unit] = Future.successful {
     window.alert(message)
