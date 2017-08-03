@@ -1,11 +1,11 @@
 name in ThisBuild := "youi-example"
 organization in ThisBuild := "io.youi"
 version in ThisBuild := "1.0.0"
-scalaVersion in ThisBuild := "2.12.2"
+scalaVersion in ThisBuild := "2.12.3"
 
 lazy val example = crossApplication.in(file("."))
   .settings(
-    youiVersion := "0.5.0-SNAPSHOT"
+    youiVersion := "0.5.0"
   )
 
 lazy val exampleJS = example.js
