@@ -18,7 +18,10 @@ object ServerExampleApplication extends ServerApplication with ExampleApplicatio
   handler.matcher(
     combined.any(
       path.exact("/"),
-      path.exact("/index.html")
+      path.exact("/index.html"),
+      path.exact("/chat.html")
     )
   ).page()
+
+  override def main(args: Array[String]): Unit = start(args)
 }

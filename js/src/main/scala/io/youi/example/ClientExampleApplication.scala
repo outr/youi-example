@@ -17,9 +17,15 @@ object ClientExampleApplication extends ClientApplication with ExampleApplicatio
   val hello = HelloScreen
 
   /**
+    * ChatScreen provides an example chat system.
+    */
+  val chat = ChatScreen
+
+  /**
     * This is the main entry-point into the Scala.js application. We export it as a top-level function in JavaScript to
-    * allow it to be executed as `application()`. The only action we need to take in this method is to initialize the UI.
+    * allow it to be executed as `application()`. No action need-be taken here except exist to initialize the application
+    * instance.
     */
   @JSExportTopLevel("application")
-  def main(): Unit = ui.init()
+  def main(): Unit = scribe.info("Initialized!")
 }

@@ -42,8 +42,8 @@ object HelloScreen extends UIScreen with URLActivation {
       // Because we are using Reactify, we can define complex functionality in our assignments.
       // However, in this case this will simply keep this text centered in the renderer no matter whether
       // the text changes, the screen resizes, the renderer moves, etc.
-      position.center := renderer.position.center
-      position.middle := renderer.position.middle
+      position.center := ui.position.center
+      position.middle := ui.position.middle
     }
     // We must add it to the container for it to display on this screen
     container.children += text

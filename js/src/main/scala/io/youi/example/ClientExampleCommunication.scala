@@ -8,7 +8,9 @@ import org.scalajs.dom._
   * implemented in this trait.
   */
 trait ClientExampleCommunication extends ExampleCommunication {
-  override def alert(message: String): Future[Unit] = Future.successful {
-    window.alert(message)
+  override def showMessage(sender: String, message: String): Future[Unit] = {
+    ChatScreen.showMessage(sender, message)
+
+    Future.successful(())
   }
 }

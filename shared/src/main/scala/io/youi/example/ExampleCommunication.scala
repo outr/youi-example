@@ -1,6 +1,7 @@
 package io.youi.example
 
 import io.youi.communication.{Communication, client, server}
+import reactify.Var
 
 import scala.concurrent.Future
 
@@ -11,13 +12,22 @@ import scala.concurrent.Future
   */
 trait ExampleCommunication extends Communication {
   /**
-    * Allows the server to display an alert in the browser.
+    * Shared value that can be updated by either the client or server and is automatically synchronized.
     */
-  @client def alert(message: String): Future[Unit]
+  val username: Var[String] = shared[String]("Anonymous")
 
   /**
-    * Allows the client to ask the server to reverse a String. A relatively pointless operation for the server to handle,
-    * but a simplified example of communication from client -> server -> client.
+    * Called by the client to the server to broadcast a message.
+    *
+    * @param message the message to post
     */
-  @server def reverse(value: String): Future[String]
+  @server def broadcast(message: String): Future[Unit]
+
+  /**
+    * Called by the server to request the client show a message from a specific user.
+    *
+    * @param sender the username of the sender
+    * @param message the message to show
+    */
+  @client def showMessage(sender: String, message: String): Future[Unit]
 }
