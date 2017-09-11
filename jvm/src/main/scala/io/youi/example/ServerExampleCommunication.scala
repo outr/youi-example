@@ -8,7 +8,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
   * implemented in this trait.
   */
 trait ServerExampleCommunication extends ExampleCommunication { self =>
-//  username.static(generateUsername("Unnamed"))
+  username.static(generateUsername("Guest"))
 
   override def broadcast(message: String): Future[Unit] = {
     val futures = ServerExampleApplication.communication.instances().map { instance =>
