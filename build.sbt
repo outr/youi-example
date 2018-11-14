@@ -5,7 +5,7 @@ scalaVersion in ThisBuild := "2.12.7"
 
 lazy val example = crossApplication.in(file("."))
   .settings(
-    youiVersion := "0.9.0-M20"
+    youiVersion := "0.9.4"
   )
 lazy val exampleJS = example.js
 lazy val exampleJVM = example.jvm

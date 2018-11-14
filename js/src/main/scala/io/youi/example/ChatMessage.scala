@@ -1,27 +1,25 @@
 package io.youi.example
 
 import io.youi.Color
-import io.youi.component.{AbstractContainer, BasicText, Component}
+import io.youi.component.{Container, HTMLTextView}
 import reactify._
 
-class ChatMessage(sender: String, message: String) extends AbstractContainer {
-  override type Child = Component
-
-  val senderLabel: BasicText = new BasicText {
+class ChatMessage(sender: String, message: String) extends Container {
+  val senderLabel: HTMLTextView = new HTMLTextView() {
     value := s"[$sender]: "
     font.size := 18.0
-    fill := Color.DarkBlue
+    color := Color.DarkBlue
     position.left := 5.0
   }
 
-  val messageText: BasicText = new BasicText {
+  val messageText: HTMLTextView = new HTMLTextView() {
     value := message
     font.size := 16.0
-    fill := Color.Black
+    color := Color.Black
     position.left := senderLabel.position.right + 5.0
     position.middle := senderLabel.position.middle
   }
 
-  childEntries += senderLabel
-  childEntries += messageText
+  children += senderLabel
+  children += messageText
 }

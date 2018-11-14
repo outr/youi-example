@@ -1,6 +1,5 @@
 package io.youi.example
 
-import io.youi._
 import io.youi.app.ClientApplication
 
 import scala.scalajs.js.annotation.JSExportTopLevel
@@ -14,12 +13,12 @@ object ClientExampleApplication extends ClientApplication with ExampleApplicatio
   /**
     * Makes sure the HelloScreen is initialized so it can be checked for URL matching.
     */
-  val hello = HelloScreen
+  val hello: HelloScreen = new HelloScreen
 
   /**
     * ChatScreen provides an example chat system.
     */
-  val chat = ChatScreen
+  val chat: ChatScreen = new ChatScreen
 
   /**
     * This is the main entry-point into the Scala.js application. We export it as a top-level function in JavaScript to

@@ -2,8 +2,10 @@ package io.youi.example
 
 import io.youi._
 import io.youi.app.screen.{UIScreen, URLActivation}
-import io.youi.component.BasicText
-import io.youi.net.{URL, URLMatcher}
+import io.youi.component.HTMLTextView
+import io.youi.net._
+
+import scala.concurrent.Future
 
 /**
   * HelloScreen is an example of a simple screen leveraging the canvas-based UI functionality. Though there are many
@@ -11,7 +13,9 @@ import io.youi.net.{URL, URLMatcher}
   * mechanism if possible. We can mix-in UIScreen to simplify using canvas-based functionality and setting up the
   * default `Renderer`. Additionally, we mix-in URLActivation to match to "/" and "/index.html" for this Screen.
   */
-object HelloScreen extends UIScreen with URLActivation {
+class HelloScreen extends UIScreen with URLActivation {
+  override def path: Path = path"/"
+
   /**
     * This defines what URLs will match to this screen. Any matching URL will activate this screen automatically.
     *
@@ -32,12 +36,12 @@ object HelloScreen extends UIScreen with URLActivation {
     * This method is invoked after the Renderer and configured and the screen loaded in order to do the final
     * setup of the screen.
     */
-  override def createUI(): Unit = {
+  override def createUI(): Future[Unit] = {
     // Create a basic text element to render on the screen
-    val text = new BasicText {
+    val text = new HTMLTextView {
       value := "Hello, World!"
       font.size := 48.0
-      fill := Color.DarkBlue
+      color := Color.DarkBlue
 
       // Because we are using Reactify, we can define complex functionality in our assignments.
       // However, in this case this will simply keep this text centered in the renderer no matter whether
@@ -47,5 +51,6 @@ object HelloScreen extends UIScreen with URLActivation {
     }
     // We must add it to the container for it to display on this screen
     container.children += text
+    Future.successful(())
   }
 }

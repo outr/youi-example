@@ -9,7 +9,7 @@ import org.scalajs.dom._
   */
 trait ClientExampleCommunication extends ExampleCommunication {
   override def showMessage(sender: String, message: String): Future[Unit] = {
-    ChatScreen.showMessage(sender, message)
+    ClientExampleApplication.chat.showMessage(sender, message)
 
     Future.successful(())
   }

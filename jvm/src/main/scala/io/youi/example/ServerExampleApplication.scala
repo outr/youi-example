@@ -2,6 +2,7 @@ package io.youi.example
 
 import io.youi.app.ServerApplication
 import io.youi.http._
+import profig.Profig
 
 /**
   * The server application implementation. Notice that it requires two mix-ins:
@@ -23,5 +24,10 @@ object ServerExampleApplication extends ServerApplication with ExampleApplicatio
     )
   ).page()
 
-  override def main(args: Array[String]): Unit = start(args)
+  override def main(args: Array[String]): Unit = {
+    Profig.loadDefaults()
+    Profig.merge(args)
+
+    start()
+  }
 }

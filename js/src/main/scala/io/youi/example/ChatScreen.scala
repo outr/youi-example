@@ -1,76 +1,89 @@
 package io.youi.example
 
-import io.youi.{Color, Key}
+import io.youi.{Color, Key, dom}
 import io.youi.app.screen.{PathActivation, UIScreen}
 import io.youi.component._
-import io.youi.hypertext.TextInput
+import io.youi.component.extras.HTMLComponent
 import io.youi.layout.VerticalLayout
-import io.youi.paint.{Border, Stroke}
+import io.youi.net._
+import org.scalajs.dom.html.Input
+import org.scalajs.dom.{Event, html}
 import reactify._
 
-object ChatScreen extends UIScreen with PathActivation {
+import scala.concurrent.Future
+
+class ChatScreen extends UIScreen with PathActivation {
   def communication: ExampleCommunication = ClientExampleApplication.communication.instances().head
 
-  lazy val title: BasicText = new BasicText {
+  lazy val heading: HTMLTextView = new HTMLTextView() {
     value := "Chat Screen"
     font.size := 36.0
-    fill := Color.DarkBlue
+    color := Color.DarkBlue
     position.center := container.position.center
     position.top := 10.0
   }
-  lazy val usernameLabel: BasicText = new BasicText {
+  lazy val usernameLabel: HTMLTextView = new HTMLTextView {
     value := "Username: "
     font.size := 24.0
-    fill := Color.Black
+    color := Color.Black
     position.left := container.position.center - 450.0
-    position.top := title.position.bottom + 20.0
+    position.top := heading.position.bottom + 20.0
   }
-  lazy val usernameValue: HTMLComponent[TextInput] = new HTMLComponent[TextInput](new TextInput) {
-    communication.username.bind(component.value)
-    component.font.family := "sans-serif"
-    component.font.size := 24.0
+  lazy val usernameValue: HTMLComponent[html.Input] = new HTMLComponent[html.Input] {
+    override protected val element: Input = dom.create[html.Input]("input")
+    override def componentType: String = "Input"
+
+    element.addEventListener("change", (_: Event) => {
+      communication.username := element.value
+    })
+    element.style.fontFamily = "sans-serif"
+    element.style.fontSize = "24px"
     position.left := usernameLabel.position.right + 10.0
     position.middle := usernameLabel.position.middle
   }
-  lazy val messageLabel: BasicText = new BasicText {
+  lazy val messageLabel: HTMLTextView = new HTMLTextView {
     value := "Message: "
     font.size := 24.0
-    fill := Color.Black
+    color := Color.Black
     position.left := usernameLabel.position.left
     position.top := usernameLabel.position.bottom + 10.0
   }
-  lazy val messageInput: HTMLComponent[TextInput] = new HTMLComponent[TextInput](new TextInput) {
-    component.element.size = 60
-    component.font.family := "sans-serif"
-    component.font.size := 24.0
+  lazy val messageInput: HTMLComponent[html.Input] = new HTMLComponent[html.Input] {
+    override protected val element: Input = dom.create[html.Input]("input")
+    override def componentType: String = "Input"
+
+    element.style.fontFamily = "sans-serif"
+    element.style.fontSize = "60px"
+    element.size = 60
     position.left := messageLabel.position.right + 10.0
     position.middle := messageLabel.position.middle
-    component.event.key.up.attach { evt =>
+    event.key.up.attach { evt =>
       if (evt.key == Key.Enter) {
-        val value = component.value().trim
+        val value = element.value.trim
         if (value.nonEmpty) {
           communication.broadcast(value)
-          component.value := ""
+          element.value = ""
         }
       }
     }
   }
-  lazy val messageHistory: TypedContainer[ChatMessage] = new TypedContainer[ChatMessage] with ScrollSupport {
+  lazy val messageHistory: TypedContainer[ChatMessage] = new TypedContainer[ChatMessage] {
     position.center := container.position.center
     position.top := messageLabel.position.bottom + 10.0
     size.width := 900.0
     size.height := container.size.height - messageLabel.position.bottom - 20.0
     background := Color.AliceBlue
-    border := Border(Stroke(Color.Black, lineWidth = 1.0), 5.0)
-    layoutManager := new VerticalLayout(10.0)
+//    border := Border(Stroke(Color.Black, lineWidth = 1.0), 5.0)
+    layout := new VerticalLayout(10.0)
   }
 
-  override def path: String = "/chat.html"
+  override def path: Path = path"/chat.html"
 
-  override def createUI(): Unit = {
+  override def createUI(): Future[Unit] = {
     container.children ++= Seq(
-      title, usernameLabel, usernameValue, messageLabel, messageInput, messageHistory
+      heading, usernameLabel, usernameValue, messageLabel, messageInput, messageHistory
     )
+    Future.successful(())
   }
 
   def showMessage(sender: String, message: String): Unit = {
